@@ -1,7 +1,7 @@
-^{:source-paths ["src"]
-  :closure-defines {reagent.debug.env true}
-  :dev-http {8080 "resources/public"}}
-{:builds
+{:source-paths ["src"]
+ :closure-defines {reagent.debug.env true}
+ :dev-http {8080 "resources/public"}
+ :builds
  {:app {:target :browser
         :output-dir "resources/public/js/compiled"
         :asset-path "/js/compiled"
