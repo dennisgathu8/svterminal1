@@ -23,10 +23,11 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Setup Clojure
-        uses: clojure/setup-clojure@v1
-        with:
-          clojure-version: 1.11.1
+      - name: Install Clojure
+        run: |
+          curl -L -O https://github.com/clojure/brew-install/releases/latest/download/linux-install.sh
+          chmod +x linux-install.sh
+          sudo ./linux-install.sh
 
       - name: Cache npm dependencies
         uses: actions/cache@v3
