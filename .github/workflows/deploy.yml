@@ -29,16 +29,8 @@ jobs:
           chmod +x linux-install.sh
           sudo ./linux-install.sh
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-
       - name: Install npm dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build application
         run: npx shadow-cljs release app
