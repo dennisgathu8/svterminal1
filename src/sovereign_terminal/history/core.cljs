@@ -8,11 +8,15 @@
 (defn load-history! []
   "Load command history from localStorage."
   (when-let [stored (.getItem js/localStorage history-key)]
-    (reset! history (cljs.reader/read-string stored))))
+    (try
+      (reset! history (js->clj (js/JSON.parse stored)))
+      (catch :default e
+        (println "Failed to parse history:" e)
+        (reset! history [])))))
 
 (defn save-history! []
   "Save command history to localStorage."
-  (.setItem js/localStorage history-key (pr-str @history)))
+  (.setItem js/localStorage history-key (js/JSON.stringify (clj->js @history))))
 
 (defn add-command! [command]
   "Add a command to history."
@@ -28,7 +32,7 @@
 
 (defn get-history []
   "Get all history entries."
-  @history))
+  @history)
 
 (defn search-history [query]
   "Search command history."
