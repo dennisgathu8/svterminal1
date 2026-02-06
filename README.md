@@ -1,102 +1,273 @@
 # The Sovereign Terminal
 
-A powerful terminal application built with ClojureScript, featuring GitHub integration and REPL capabilities.
+<div align="center">
 
-## Features
+![Version](https://img.shields.io/badge/version-0.1.0-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+![Clojure](https://img.shields.io/badge/Clojure-1.11.1-purple?style=for-the-badge)
+![ClojureScript](https://img.shields.io/badge/ClojureScript-1.11.1-orange?style=for-the-badge)
 
-- **Terminal Emulation**: Full terminal-like experience in the browser
-- **Command History**: Persisted command history using localStorage
-- **REPL**: Built-in ClojureScript REPL for evaluating expressions
-- **GitHub Integration**: Search repositories and manage GitHub resources
-- **Demos**: Interactive demos to showcase terminal capabilities
-- **Theming**: Dark and light themes with customizable colors
-- **Deployment Ready**: Deploy to Fly.io with automated CI/CD
+**A production-grade terminal application built with ClojureScript, featuring enterprise GitHub integration and a sophisticated REPL environment.**
 
-## Quick Start
+[Features](#-features) • [Architecture](#-architecture) • [Quick Start](#-quick-start) • [Deployment](#-deployment)
+
+</div>
+
+---
+
+## 🎯 Features
+
+| Feature | Description |
+|---------|-------------|
+| **Terminal Emulation** | Full-featured terminal with command input/output, history navigation, and persistent session state |
+| **GitHub Integration** | Enterprise-grade GitHub API integration with token-based authentication for repo search and user management |
+| **REPL Environment** | Sophisticated ClojureScript REPL supporting arithmetic, logic operations, and extensible command registration |
+| **Command History** | Persistent command history using localStorage with search and retrieval capabilities |
+| **Interactive Demos** | Built-in demo system showcasing terminal capabilities with extensible demo framework |
+| **Theming Engine** | Professional theming system with Tokyo Night (dark) and light themes, CSS custom properties |
+| **CI/CD Pipeline** | Production-ready GitHub Actions workflow with automated builds and Fly.io deployments |
+| **Type Safety** | End-to-end type safety with Clojure's immutable data structures and reagent's reactive model |
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart TB
+    subgraph User Interface
+        T[Terminal View] --> I[Input Handler]
+        T --> O[Output Renderer]
+        I --> C[Command Parser]
+        C --> R[Command Registry]
+    end
+
+    subgraph Core Services
+        R --> H[History Manager]
+        R --> G[GitHub API]
+        R --> E[REPL Evaluator]
+        R --> D[Demo Engine]
+        
+        H --> LS[localStorage]
+        G --> GH[GitHub REST API]
+    end
+
+    subgraph Application State
+        AS[(App State Atom)]
+        AS --> T
+        AS --> R
+    end
+
+    style User Interface fill:#1a1b26,stroke:#bb9af7,stroke-width:2px,color:#a9b1d6
+    style Core Services fill:#1a1b26,stroke:#7aa2f7,stroke-width:2px,color:#a9b1d6
+    style Application State fill:#1a1b26,stroke:#9ece6a,stroke-width:2px,color:#a9b1d6
+```
+
+### Component Overview
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         The Sovereign Terminal                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌──────────┐ │
+│  │   Terminal  │    │   History   │    │    REPL     │    │  GitHub  │ │
+│  │   UI/View   │    │   Manager   │    │  Evaluator  │    │  Client  │ │
+│  └─────────────┘    └─────────────┘    └─────────────┘    └──────────┘ │
+│         │                  │                  │                 │        │
+│         └──────────────────┼──────────────────┼─────────────────┘        │
+│                            │                  │                          │
+│                     ┌──────▼──────┐   ┌──────▼──────┐                   │
+│                     │   Command    │   │  Application│                   │
+│                     │  Registry    │   │   State     │                   │
+│                     └─────────────┘   └─────────────┘                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                           Infrastructure                                │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                 │
+│  │   Reagent   │    │  Shadow-cljs │    │  Fly.io     │                 │
+│  │   React     │    │   Compiler   │    │  Deploy     │                 │
+│  └─────────────┘    └─────────────┘    └─────────────┘                 │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- [Clojure CLI](https://clojure.org/guides/getting_started)
-- [Node.js](https://nodejs.org/) (v16 or higher)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+| Tool | Version | Purpose |
+|------|---------|---------|
+| [Clojure CLI](https://clojure.org/guides/getting_started) | ≥ 1.11.0 | Primary build tool |
+| [Node.js](https://nodejs.org/) | ≥ 18 | JavaScript runtime |
+| [npm](https://www.npmjs.com/) | ≥ 9 | Package manager |
 
 ### Installation
 
-1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/the-sovereign-terminal.git
-cd the-sovereign-terminal
-```
+# Clone the repository
+git clone https://github.com/dennisgathu8/svterminal1.git
+cd svterminal1
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Start the development server:
-```bash
+# Start development server
 npm run dev
+
+# Open in browser
+# http://localhost:8080
 ```
 
-4. Open [http://localhost:8080](http://localhost:8080) in your browser.
-
-### Building for Production
+### Production Build
 
 ```bash
+# Build optimized assets
 npm run build
+
+# Output location: resources/public/js/compiled/
 ```
 
-The compiled assets will be in `resources/public/js/compiled/`.
+---
 
-## Usage
+## 📖 Usage
 
-### Available Commands
+### Built-in Commands
 
-| Command | Description |
-|---------|-------------|
-| `help` | List all available commands |
-| `clear` | Clear the terminal output |
-| `echo <text>` | Print text to the terminal |
-| `pwd` | Print current working directory |
-| `ls` | List directory contents |
-| `date` | Display current date and time |
-| `github <subcommand>` | GitHub integration commands |
-| `demo <name>` | Run a demo by name |
+```bash
+# Display help information
+help
 
-### GitHub Commands
+# Clear terminal output
+clear
 
-| Command | Description |
-|---------|-------------|
-| `github set-token <token>` | Set GitHub API token |
-| `github user` | Fetch authenticated user info |
-| `github search <query>` | Search repositories |
+# Echo text to terminal
+echo "Hello, World!"
 
-### REPL Commands
+# Print working directory
+pwd
 
-| Command | Description |
-|---------|-------------|
-| `eval (+ 1 2)` | Evaluate arithmetic expressions |
+# List directory contents
+ls
 
-## Architecture
+# Display current timestamp
+date
 
-```
-src/sovereign_terminal/
-├── core.cljs           # Main application entry point
-├── ui/
-│   ├── terminal.cljs   # Terminal component
-│   └── components.cljs # Reusable UI components
-├── repl/
-│   ├── core.cljs       # Command execution
-│   └── eval.cljs       # Expression evaluation
-├── github/
-│   └── core.cljs      # GitHub API integration
-├── history/
-│   └── core.cljs      # Command history management
-└── demos/
-    └── core.cljs      # Demo commands
+# GitHub integration
+github set-token <token>
+github user
+github search <query>
+
+# Run demos
+demo hello
+demo math
+demo colors
+demo clock
 ```
 
-## Development
+### REPL Operations
+
+```clojure
+(+ 1 2)    ;; => 3
+(- 10 4)   ;; => 6
+(* 5 6)    ;; => 30
+(quot 100 4) ;; => 25
+```
+
+---
+
+## 🧩 Extensibility
+
+### Register Custom Commands
+
+```clojure
+(ns my-commands
+  (:require [sovereign-terminal.repl.core :as repl]))
+
+(repl/register-command! 
+  "my-command" 
+  (fn [state args]
+    (swap! state update :output conj "Custom command executed!")
+    nil))
+```
+
+### Add New Demos
+
+```clojure
+(ns my-demos
+  (:require [sovereign-terminal.demos.core :as demos]))
+
+(demos/register-demo!
+  "my-demo"
+  "Description of my demo"
+  (fn [state]
+    (swap! state update :output conj "Demo output")
+    nil))
+```
+
+---
+
+## 📦 Project Structure
+
+```
+svterminal1/
+├── .github/workflows/
+│   └── deploy.yml           # CI/CD pipeline
+├── dev/
+│   └── preload.cljs          # Development reload support
+├── resources/public/
+│   ├── css/
+│   │   └── style.css        # Tokyo Night theme
+│   ├── favicon.svg
+│   └── index.html           # Entry point
+├── src/sovereign_terminal/
+│   ├── core.cljs            # Application bootstrap
+│   ├── demos/
+│   │   └── core.cljs        # Demo framework
+│   ├── github/
+│   │   └── core.cljs        # GitHub API client
+│   ├── history/
+│   │   └── core.cljs        # Persistence layer
+│   ├── repl/
+│   │   ├── core.cljs        # Command executor
+│   │   └── eval.cljs        # Expression evaluator
+│   └── ui/
+│       ├── components.cljs  # Reusable components
+│       └── terminal.cljs    # Terminal interface
+├── deps.edn                 # Clojure dependencies
+├── fly.toml                # Fly.io config
+├── package.json            # Node dependencies
+└── shadow-cljs.edn         # Build configuration
+```
+
+---
+
+## 🚁 Deployment
+
+### Fly.io
+
+```bash
+# Authenticate
+flyctl auth login
+
+# Launch
+flyctl launch
+
+# Deploy
+flyctl deploy
+```
+
+### CI/CD Pipeline
+
+The repository includes a production-ready GitHub Actions workflow:
+
+1. **Build Job**: Compiles ClojureScript → JavaScript
+2. **Deploy Job**: Deploys to Fly.io on main branch commits
+
+**Required Secrets:**
+- `FLY_API_TOKEN` - Fly.io authentication token
+
+---
+
+## 🛠️ Development
 
 ### Running Tests
 
@@ -104,52 +275,37 @@ src/sovereign_terminal/
 npm test
 ```
 
-### Project Structure
+### Hot Reload
 
-- `deps.edn` - Clojure dependencies
-- `shadow-cljs.edn` - Shadow-cljs build configuration
-- `package.json` - Node.js dependencies
-- `fly.toml` - Fly.io deployment configuration
-- `.github/workflows/deploy.yml` - CI/CD pipeline
-
-## Deployment
-
-### Deploy to Fly.io
-
-1. Create a Fly.io account and install flyctl:
 ```bash
-flyctl auth login
+npm run dev
 ```
 
-2. Launch the app:
-```bash
-flyctl launch
-```
+The development server provides:
+- Instant hot reload on file changes
+- REPL integration via shadow-cljs
+- Source map support for debugging
 
-3. Deploy:
-```bash
-flyctl deploy
-```
+---
 
-### GitHub Actions
+## 📄 License
 
-The project includes a CI/CD workflow that automatically builds and deploys to Fly.io on pushes to the main branch.
+MIT License - see [LICENSE](LICENSE) for details.
 
-## Contributing
+---
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+3. Commit changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+<div align="center">
 
-## Acknowledgments
+**Built with ❤️ using ClojureScript, Reagent, and Shadow-cljs**
 
-- [ClojureScript](https://clojurescript.org/)
-- [Reagent](https://reagent-project.github.io/)
-- [Shadow-cljs](https://shadow-cljs.github.io/shadow-cljs/)
-- [Tokyonight Theme](https://github.com/folke/tokyonight.vim)
+</div>
