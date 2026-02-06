@@ -1,6 +1,8 @@
 {:source-paths ["src"]
  :closure-defines {reagent.debug.env true}
  :dev-http {8080 "resources/public"}
+ :npm {:devDependencies {"react" "^18.2.0"
+                         "react-dom" "^18.2.0"}}
  :builds
  {:app {:target :browser
         :output-dir "resources/public/js/compiled"
