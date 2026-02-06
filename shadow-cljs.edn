@@ -6,7 +6,7 @@
         :output-dir "resources/public/js/compiled"
         :asset-path "/js/compiled"
         :modules {:main {:init-fn sovereign-terminal.core/init!
-                         :entries [# sovereign-terminal.core]}}
+                         :entries [sovereign-terminal.core]}}
         :devtools {:http-port 8777
                    :preloads [dev.preload]}}
   :test {:target :node-test
