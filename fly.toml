@@ -1,0 +1,15 @@
+app = "the-sovereign-terminal"
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  forces_h2 = true
+  auto_stop_machines = true
+  auto_start_machines = true
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"
+  cpus = 1
+  cpu_kind = "shared"

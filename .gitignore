@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+.nbb/
+
+# Build outputs
+resources/public/js/compiled/
+resources/public/js/test/
+target/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local files
+.local/
+.temp/
+
+# Clojure
+.cpcache/
+.cache/

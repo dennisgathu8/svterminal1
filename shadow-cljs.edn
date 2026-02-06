@@ -1,0 +1,14 @@
+^{:source-paths ["src"]
+  :closure-defines {reagent.debug.env true}
+  :dev-http {8080 "resources/public"}}
+{:builds
+ {:app {:target :browser
+        :output-dir "resources/public/js/compiled"
+        :asset-path "/js/compiled"
+        :modules {:main {:init-fn sovereign-terminal.core/init!
+                         :entries [# sovereign-terminal.core]}}
+        :devtools {:http-port 8777
+                   :preloads [dev.preload]}}
+  :test {:target :node-test
+         :output-dir "resources/public/js/test"
+         :main sovereign-terminal.test-runner}}}

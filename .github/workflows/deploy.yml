@@ -1,0 +1,66 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      
+      - name: Setup Clojure
+        uses: DeLaGuardo/setup-clojure@v12
+        with:
+          cli: 1.11.1.143
+      
+      - name: Install npm dependencies
+        run: npm ci
+      
+      - name: Install shadow-cljs
+        run: npm install -g shadow-cljs
+      
+      - name: Build application
+        run: shadow-cljs release app
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: public
+          path: resources/public/js/compiled/
+      
+  deploy-fly:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: public
+          path: resources/public/js/compiled/
+      
+      - name: Install Fly.io
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          flyctl_version: latest
+      
+      - name: Deploy to Fly.io
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

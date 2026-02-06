@@ -1,0 +1,266 @@
+/* The Sovereign Terminal - Styles */
+:root {
+  --bg-color: #1a1b26;
+  --text-color: #a9b1d6;
+  --prompt-color: #7aa2f7;
+  --success-color: #9ece6a;
+  --error-color: #f7768e;
+  --warning-color: #e0af68;
+  --accent-color: #bb9af7;
+  --border-color: #414868;
+  --font-family: 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  --font-size: 14px;
+  --line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.terminal-header {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.title {
+  font-size: 1.5em;
+  color: var(--accent-color);
+  margin-bottom: 10px;
+}
+
+.status-bar {
+  display: flex;
+  gap: 20px;
+  font-size: 0.85em;
+  color: var(--prompt-color);
+}
+
+.mode {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.output {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.line {
+  margin-bottom: 4px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.input-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prompt {
+  color: var(--prompt-color);
+  font-weight: bold;
+}
+
+.input-line input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  outline: none;
+}
+
+.output .line.error {
+  color: var(--error-color);
+}
+
+.output .line.success {
+  color: var(--success-color);
+}
+
+.output .line.warning {
+  color: var(--warning-color);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.terminal {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Button styles */
+.button {
+  background: var(--border-color);
+  color: var(--text-color);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background: var(--accent-color);
+  color: var(--bg-color);
+}
+
+/* Input styles */
+.input-field {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--accent-color);
+}
+
+/* Card styles */
+.card {
+  background: rgba(65, 72, 104, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Badge styles */
+.badge {
+  background: var(--accent-color);
+  color: var(--bg-color);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 500px;
+  width: 90%;
+}
+
+.modal-title {
+  color: var(--accent-color);
+  margin-bottom: 16px;
+}
+
+/* Spinner styles */
+.spinner {
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Light theme */
+.terminal.light {
+  --bg-color: #f8f8f2;
+  --text-color: #49483e;
+  --prompt-color: #9c64ff;
+  --success-color: #50a549;
+  --error-color: #f92672;
+  --warning-color: #fd971f;
+  --accent-color: #a6e22e;
+  --border-color: #d4d4d4;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .terminal {
+    padding: 10px;
+  }
+  
+  .title {
+    font-size: 1.2em;
+  }
+  
+  .status-bar {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
